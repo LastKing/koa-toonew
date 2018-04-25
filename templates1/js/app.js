@@ -5,8 +5,6 @@ const views = require('koa-views');
 const onerror = require('koa-onerror');
 const router = require("koa-router")();
 
-const moment = require('moment');
-
 const index = require('./routes/index');
 const users = require('./routes/users');
 
@@ -20,13 +18,11 @@ app.use(views('views', {
 }));
 app.use(require('koa-bodyparser')());
 app.use(json());
-app.use(logger());
+if (process.env.NODE_ENV !== 'production')
+  app.use(logger());
 
 app.use(function* (next) {
-  let start = new Date();
   yield next;
-  let ms = new Date - start;
-  console.log('%s %s %s - %s', moment(start).format("YYYY-MM-DD HH:MM:SS"), this.method, this.url, ms);
 });
 
 app.use(require('koa-static')(__dirname + '/public'));
