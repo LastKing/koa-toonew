@@ -191,7 +191,7 @@ function createApplication(app_name, path) {
 
     // package.json
     var pkg = {
-        name: app_name
+      name: app_name
       , version: '0.1.0'
       , private: true
       , "scripts": {
