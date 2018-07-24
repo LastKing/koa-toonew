@@ -213,7 +213,6 @@ function createApplication(app_name, path) {
         "koa-views": "^5.2.1"
       }
       , "devDependencies": {
-        "nodemon": "^1.8.1"
       }
     }
 
