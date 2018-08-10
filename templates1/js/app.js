@@ -41,7 +41,11 @@ app.on('error', (err, ctx) => {
 
 /* 捕获未知结束任务 */
 process.on('uncaughtException', function (err) {
-  console.log(err);
+  console.error(`uncaughtException : ${err.stack || err}`);
+});
+
+process.on('unhandledRejection', (reason, p) => {
+  console.error(`unhandledRejection reason: ${reason} -- p: ${p}`);
 });
 
 module.exports = app;

@@ -1,13 +1,14 @@
 const Koa = require('koa');
-const app = new Koa();
-const views = require('koa-views');
 const json = require('koa-json');
+const views = require('koa-views');
+const logger = require('koa-logger');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
-const logger = require('koa-logger');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+
+const app = new Koa();
 
 // error handler
 onerror(app);
@@ -24,7 +25,6 @@ app.use(views(__dirname + '/views', {
   extension: '{views}'
 }));
 
-// logger
 app.use(async (ctx, next) => {
   await next();
 });
@@ -36,6 +36,15 @@ app.use(users.routes(), users.allowedMethods());
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
+});
+
+/* 捕获未知结束任务 */
+process.on('uncaughtException', function (err) {
+  console.error(`uncaughtException : ${err.stack || err}`);
+});
+
+process.on('unhandledRejection', (reason, p) => {
+  console.error(`unhandledRejection reason: ${reason} -- p: ${p}`);
 });
 
 module.exports = app;
