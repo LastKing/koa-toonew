@@ -110,9 +110,6 @@ function createApplication(app_name, path) {
   var compass = loadTemplate('css/style.scss');
   var sass = loadTemplate('css/style.sass');
 
-  //yarn version lock file
-  var yarn = loadTemplate('js/yarn.lock');
-
   mkdir(path, function () {
     mkdir(path + '/public');
     mkdir(path + '/public/js');
@@ -166,10 +163,6 @@ function createApplication(app_name, path) {
       }
       complete();
     });
-
-    //yarn write path
-    if (program.template === 'ejs')
-      write(path + 'yarn.lock', yarn);
 
     // CSS Engine support
     switch (program.css) {
